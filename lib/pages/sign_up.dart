@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:login_app/authController.dart';
+import 'package:login_app/Controllers/authController.dart';
 import 'package:login_app/components/CustomButton.dart';
 import 'package:login_app/components/FormInputField.dart';
 import 'package:login_app/components/header.dart';

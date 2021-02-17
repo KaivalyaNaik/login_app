@@ -18,7 +18,7 @@ class Validator {
   }
 
   String name(String value) {
-    Pattern pattern = r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$";
+    Pattern pattern = r"^[a-zA-Z]+\ ?[a-zA-Z]*";
     RegExp regex = new RegExp(pattern);
     if (!regex.hasMatch(value))
       return "Invalid Name";

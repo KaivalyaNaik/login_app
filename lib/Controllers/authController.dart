@@ -5,12 +5,16 @@ import 'package:login_app/models/user_model.dart';
 
 class AuthController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  User firebaseUser;
+
   Future<void> createUser(String email, String password, UserModel userModel,
       BuildContext context) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-      await addUser(userModel);
+      firebaseUser = userCredential.user;
+      userModel.uid = firebaseUser.uid;
+      await addUser(userModel, firebaseUser);
       Navigator.pop(context, true);
     } on FirebaseAuthException catch (e) {
       print("Error :$e");
@@ -23,6 +27,7 @@ class AuthController {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+      firebaseUser = userCredential.user;
     } on FirebaseAuthException catch (e) {
       print("Error:$e");
     } catch (e) {
@@ -38,8 +43,11 @@ class AuthController {
     }
   }
 
-  Future<void> addUser(UserModel userModel) async {
+  Future addUser(UserModel userModel, User user) async {
     CollectionReference users = firestore.collection("users");
-    return users.add(userModel.toJson());
+    return users
+        .doc("${user.uid}")
+        .set(userModel.toJson())
+        .then((value) => {print("Added Successfully")});
   }
 }
