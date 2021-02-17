@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:login_app/authController.dart';
+import 'package:login_app/components/CustomButton.dart';
 import 'package:login_app/components/FormInputField.dart';
+import 'package:login_app/components/header.dart';
+import 'package:login_app/models/user_model.dart';
 import 'package:login_app/validator.dart';
 
 // ignore: must_be_immutable
@@ -8,7 +12,9 @@ class SignUp extends StatelessWidget {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController ageController = TextEditingController();
-
+  TextEditingController companyController = TextEditingController();
+  AuthController _authController = AuthController();
+  UserModel userModel;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -33,6 +39,12 @@ class SignUp extends StatelessWidget {
                     children: <Widget>[
                       SizedBox(
                         height: 50,
+                      ),
+                      GestureDetector(
+                        child: Header(),
+                        onTap: () {
+                          print("here");
+                        },
                       ),
                       FormInputField(
                         controller: nameController,
@@ -60,7 +72,37 @@ class SignUp extends StatelessWidget {
                         obscureText: true,
                       ),
                       SizedBox(
+                        height: 24,
+                      ),
+                      FormInputField(
+                        controller: ageController,
+                        iconData: Icons.access_time,
+                        labelText: "Age",
+                        validator: Validator().number,
+                        obscureText: false,
+                      ),
+                      SizedBox(
+                        height: 24,
+                      ),
+                      FormInputField(
+                        controller: companyController,
+                        iconData: Icons.work,
+                        labelText: "Company",
+                        validator: Validator().name,
+                      ),
+                      SizedBox(
                         height: 50,
+                      ),
+                      CustomButton("SignUp", () {
+                        userModel = UserModel(
+                            name: nameController.text,
+                            age: int.parse(ageController.text),
+                            company: companyController.text);
+                        _authController.createUser(emailController.text,
+                            passwordController.text, userModel, context);
+                      }),
+                      SizedBox(
+                        height: 20,
                       )
                     ],
                   ),
