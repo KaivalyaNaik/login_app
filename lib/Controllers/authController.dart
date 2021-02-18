@@ -5,7 +5,7 @@ import 'package:login_app/models/user_model.dart';
 
 class AuthController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  User firebaseUser;
+  static User firebaseUser;
 
   Future<void> createUser(String email, String password, UserModel userModel,
       BuildContext context) async {

@@ -1,7 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:login_app/Controllers/authController.dart';
+import 'package:login_app/Controllers/picController.dart';
+import 'package:login_app/models/picture.dart';
 import 'package:login_app/pages/sign_in.dart';
+import 'package:provider/provider.dart';
 import 'pages/home.dart';
 
 void main() {
@@ -11,14 +15,19 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Login App',
-      theme: ThemeData(
-        canvasColor: Colors.white.withOpacity(.95),
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => Picture(picName: null))
+      ],
+      child: MaterialApp(
+        title: 'Login App',
+        theme: ThemeData(
+          canvasColor: Colors.white.withOpacity(.95),
+          primarySwatch: Colors.blue,
+        ),
+        debugShowCheckedModeBanner: false,
+        home: LandingPage(),
       ),
-      debugShowCheckedModeBanner: false,
-      home: LandingPage(),
     );
   }
 }
@@ -41,11 +50,16 @@ class LandingPage extends StatelessWidget {
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.active) {
+                  AuthController.firebaseUser = snapshot.data;
+                  print(AuthController.firebaseUser.toString());
                   User user = snapshot.data;
                   if (user == null)
                     return SignIn();
-                  else
-                    return Home();
+                  else {
+                    PicController _picController = PicController();
+                    _picController.getImage(context);
+                  }
+                  return Home();
                 }
                 return Scaffold(
                   body: Center(

@@ -4,6 +4,7 @@ import 'package:login_app/components/CustomButton.dart';
 import 'package:login_app/components/FormInputField.dart';
 import 'package:login_app/components/header.dart';
 import 'package:login_app/models/user_model.dart';
+import 'package:login_app/pages/TakePic.dart';
 import 'package:login_app/validator.dart';
 
 // ignore: must_be_immutable
@@ -40,11 +41,17 @@ class SignUp extends StatelessWidget {
                       SizedBox(
                         height: 50,
                       ),
-                      GestureDetector(
-                        child: Header(),
-                        onTap: () {
-                          print("here");
-                        },
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          GestureDetector(
+                            child: Header(),
+                            onTap: () {
+                              print("here");
+                            },
+                          ),
+                          TakePicScreen(Colors.white)
+                        ],
                       ),
                       FormInputField(
                         controller: nameController,

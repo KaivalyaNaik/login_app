@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Header extends StatelessWidget {
-  String _imageLogo = "assets/default.png";
+  final String _imageLogo = "assets/default.png";
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(

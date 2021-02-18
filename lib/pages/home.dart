@@ -1,9 +1,15 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:login_app/Controllers/authController.dart';
 import 'package:login_app/Controllers/userController.dart';
+import 'package:login_app/components/DynamicHeader.dart';
 import 'package:login_app/components/TextComponent.dart';
+import 'package:login_app/components/header.dart';
+import 'package:login_app/models/picture.dart';
 import 'package:login_app/models/user_model.dart';
+import 'package:login_app/pages/TakePic.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -11,8 +17,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  AuthController _authController = AuthController();
   UserController _userController = UserController();
+
   User user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
@@ -24,45 +30,24 @@ class _HomeState extends State<Home> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           UserModel userModel = snapshot.data;
-          return SingleChildScrollView(
-              child: Container(
-            height: h,
-            width: w,
-            child: Stack(
-              children: [
-                Center(
-                  child: Container(
-                    height: h / 3,
-                    width: w / 1.5,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(30)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 50,
-                        ),
-                        TextComponent("Name : ", userModel.name),
-                        SizedBox(
-                          height: 24,
-                        ),
-                        TextComponent("Age : ", userModel.age.toString()),
-                        SizedBox(
-                          height: 24,
-                        ),
-                        TextComponent("Company : ", userModel.company),
-                        SizedBox(
-                          height: 50,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          return Container(
+              child: CustomScrollView(
+            slivers: <Widget>[
+              SliverPersistentHeader(
+                delegate: DynamicHeader(),
+                pinned: true,
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                  return Container(
+                    height: h,
+                    color: Colors.white,
+                    width: w,
+                  );
+                }, childCount: 1),
+              )
+            ],
           ));
         }
         return Container(

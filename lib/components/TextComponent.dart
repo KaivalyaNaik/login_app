@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:login_app/constants.dart';
 
 class TextComponent extends StatelessWidget {
@@ -16,8 +15,7 @@ class TextComponent extends StatelessWidget {
               text: data,
             )
           ],
-          style: GoogleFonts.lato(
-              fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold)),
+          style: ThemeInfo.textStyle),
     );
   }
 }
