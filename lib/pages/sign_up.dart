@@ -29,9 +29,7 @@ class SignUp extends StatelessWidget {
           child: Center(
             child: SingleChildScrollView(
               child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    border: Border.all(color: Colors.blue, width: 2)),
+                decoration: BoxDecoration(),
                 child: Container(
                   padding: EdgeInsets.all(20),
                   child: Column(
@@ -40,18 +38,6 @@ class SignUp extends StatelessWidget {
                     children: <Widget>[
                       SizedBox(
                         height: 50,
-                      ),
-                      Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          GestureDetector(
-                            child: Header(),
-                            onTap: () {
-                              print("here");
-                            },
-                          ),
-                          TakePicScreen(Colors.white)
-                        ],
                       ),
                       FormInputField(
                         controller: nameController,
@@ -100,14 +86,16 @@ class SignUp extends StatelessWidget {
                       SizedBox(
                         height: 50,
                       ),
-                      CustomButton("SignUp", () {
-                        userModel = UserModel(
-                            name: nameController.text,
-                            age: int.parse(ageController.text),
-                            company: companyController.text);
-                        _authController.createUser(emailController.text,
-                            passwordController.text, userModel, context);
-                      }),
+                      CustomButton(
+                          text: "SignUp",
+                          f: () {
+                            userModel = UserModel(
+                                name: nameController.text,
+                                age: int.parse(ageController.text),
+                                company: companyController.text);
+                            _authController.createUser(emailController.text,
+                                passwordController.text, userModel, context);
+                          }),
                       SizedBox(
                         height: 20,
                       )

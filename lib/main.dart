@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:login_app/Controllers/authController.dart';
 import 'package:login_app/Controllers/picController.dart';
 import 'package:login_app/models/picture.dart';
+import 'package:login_app/pages/WelcomePage.dart';
 import 'package:login_app/pages/sign_in.dart';
 import 'package:provider/provider.dart';
 import 'pages/home.dart';
@@ -21,10 +22,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Login App',
-        theme: ThemeData(
-          canvasColor: Colors.white.withOpacity(.95),
-          primarySwatch: Colors.blue,
-        ),
+        theme: ThemeData(primaryColor: Colors.white),
         debugShowCheckedModeBanner: false,
         home: LandingPage(),
       ),
@@ -54,7 +52,7 @@ class LandingPage extends StatelessWidget {
                   print(AuthController.firebaseUser.toString());
                   User user = snapshot.data;
                   if (user == null)
-                    return SignIn();
+                    return WelcomePage();
                   else {
                     PicController _picController = PicController();
                     _picController.getImage(context);

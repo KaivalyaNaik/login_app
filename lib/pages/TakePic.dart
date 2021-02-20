@@ -25,7 +25,7 @@ class _TakePicScreenState extends State<TakePicScreen> {
   Future<void> _takePicture() async {
     ImagePicker picker = ImagePicker();
     final PickedFile imageFile = await picker.getImage(
-        source: ImageSource.gallery, maxHeight: 150, maxWidth: 150);
+        source: ImageSource.gallery, maxHeight: 480, maxWidth: 650);
     if (imageFile == null) {
       return;
     }
@@ -39,9 +39,9 @@ class _TakePicScreenState extends State<TakePicScreen> {
     final savedImage = await _takenImage.copy('${appDir.path}/${user.uid}');
 
     var _imageToStore = Picture(picName: savedImage);
-    await _picController.uploadImage(savedImage.path);
 
     Provider.of<Picture>(context, listen: false).storeImage(_imageToStore);
+    await _picController.uploadImage(savedImage.path);
   }
 
   @override

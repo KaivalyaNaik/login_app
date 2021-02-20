@@ -5,7 +5,6 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-        foregroundColor: Colors.blue,
         backgroundColor: Colors.transparent,
         radius: 60.0,
         child: ClipOval(
