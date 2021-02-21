@@ -6,8 +6,12 @@ import 'package:login_app/components/FormInputField.dart';
 import 'package:login_app/constants.dart';
 import 'package:login_app/validator.dart';
 
-// ignore: must_be_immutable
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
+  @override
+  _SignInState createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();

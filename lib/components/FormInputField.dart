@@ -23,6 +23,7 @@ class FormInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
+          focusColor: primaryColor,
           errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
               borderSide: BorderSide(color: primaryColor)),
@@ -50,6 +51,7 @@ class FormInputField extends StatelessWidget {
       validator: validator,
       onSaved: onSaved,
       keyboardType: keyboardType,
+      style: TextStyle(color: primaryColor),
     );
   }
 }

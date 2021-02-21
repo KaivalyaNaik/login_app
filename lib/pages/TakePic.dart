@@ -49,7 +49,7 @@ class _TakePicScreenState extends State<TakePicScreen> {
     return IconButton(
         icon: Icon(
           Icons.add_a_photo,
-          color: color,
+          color: Colors.white70,
         ),
         onPressed: _takePicture);
   }

@@ -17,16 +17,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => Picture(picName: null))
-      ],
-      child: MaterialApp(
-        title: 'Login App',
-        theme: ThemeData(primaryColor: Colors.white),
-        debugShowCheckedModeBanner: false,
-        home: LandingPage(),
-      ),
-    );
+        providers: [
+          ChangeNotifierProvider(create: (_) => Picture(picName: null))
+        ],
+        child: GestureDetector(
+          child: MaterialApp(
+            title: 'Login App',
+            theme: ThemeData(primaryColor: Colors.white),
+            debugShowCheckedModeBanner: false,
+            home: LandingPage(),
+          ),
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              FocusManager.instance.primaryFocus.unfocus();
+            }
+          },
+        ));
   }
 }
 
