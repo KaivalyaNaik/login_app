@@ -91,7 +91,7 @@ class SignUp extends StatelessWidget {
                           f: () {
                             userModel = UserModel(
                                 name: nameController.text,
-                                age: int.parse(ageController.text),
+                                dob: ageController.text,
                                 company: companyController.text);
                             _authController.createUser(emailController.text,
                                 passwordController.text, userModel, context);

@@ -68,11 +68,13 @@ class _SignInState extends State<SignIn> {
                   CustomButton(
                       f: () async {
                         if (_formKey.currentState.validate()) {
-                          _authController.signInUser(emailController.text,
-                              passwordController.text, context);
+                          _authController.signInUser(
+                              emailController.text.trim(),
+                              passwordController.text.trim(),
+                              context);
                         }
                       },
-                      text: "LOGIN")
+                      text: "LOGIN"),
                 ],
               ),
             ),

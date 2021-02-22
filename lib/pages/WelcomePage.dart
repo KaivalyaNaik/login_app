@@ -20,11 +20,11 @@ class WelcomePage extends StatelessWidget {
     _controller.animateToPage(
       2,
       duration: Duration(milliseconds: 800),
-      curve: Curves.bounceOut,
+      curve: Curves.easeIn,
     );
   }
 
-  Widget Welcome(BuildContext context) {
+  Widget Welcome(BuildContext context, Function page1, Function page2) {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -45,11 +45,11 @@ class WelcomePage extends StatelessWidget {
                 SizedBox(
                   height: 50,
                 ),
-                CustomButton(text: "LOGIN", f: () {}),
+                CustomButton(text: "LOGIN", f: page1),
                 SizedBox(
                   height: 30,
                 ),
-                CustomButton(text: "SIGNUP", f: () {})
+                CustomButton(text: "SIGNUP", f: page2)
               ],
             )));
   }
@@ -63,7 +63,11 @@ class WelcomePage extends StatelessWidget {
         controller: _controller,
         physics: AlwaysScrollableScrollPhysics(),
         scrollDirection: Axis.horizontal,
-        children: [SignIn(), Welcome(context), StepperSignUP()],
+        children: [
+          SignIn(),
+          Welcome(context, gotoLogin, gotoSignup),
+          StepperSignUP()
+        ],
       ),
     ));
   }

@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:login_app/Controllers/userController.dart';
-import 'package:login_app/components/CustomAppBar.dart';
 import 'package:login_app/components/DrawerComponent.dart';
 import 'package:login_app/constants.dart';
 import 'package:login_app/models/user_model.dart';
+import 'package:login_app/pages/HelpCenter.dart';
+import 'package:login_app/pages/PrivacyPolicy.dart';
 import 'package:login_app/pages/profile.dart';
 
 class Home extends StatefulWidget {
@@ -74,14 +75,24 @@ class _HomeState extends State<Home> {
                   ),
                   DrawerComponent(
                     field: "Help Centre",
-                    f: () {},
+                    f: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HelpCenter()));
+                    },
                   ),
                   Container(
                     height: 1,
                     width: w / 3,
                     color: Colors.redAccent,
                   ),
-                  DrawerComponent(field: "Privacy Policy", f: () {})
+                  DrawerComponent(
+                      field: "Privacy Policy",
+                      f: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Privacy()));
+                      })
                 ],
               ),
             ),

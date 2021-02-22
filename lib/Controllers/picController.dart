@@ -7,22 +7,38 @@ import 'authController.dart';
 import 'dart:io';
 
 class PicController {
-  Reference storage = FirebaseStorage.instance
-      .ref("/images/${AuthController.firebaseUser.uid}.jpeg");
-
   Future<void> getImage(BuildContext context) async {
-    Directory appDir = await getApplicationDocumentsDirectory();
-    File file = File('${appDir.path}/${AuthController.firebaseUser.uid}.jpeg');
+    Reference defaultImage = FirebaseStorage.instance.ref('/default.png');
     try {
+      Reference storage = FirebaseStorage.instance
+          .ref("/images/${AuthController.firebaseUser.uid}.jpeg");
+
+      Directory appDir = await getApplicationDocumentsDirectory();
+      File file =
+          File('${appDir.path}/${AuthController.firebaseUser.uid}.jpeg');
       await storage.writeToFile(file);
+
+      Picture picture = Picture(picName: file);
+      Provider.of<Picture>(context, listen: false).storeImage(picture);
     } catch (e) {
-      print(e.toString());
+      Directory appDir = await getApplicationDocumentsDirectory();
+      File file =
+          File('${appDir.path}/${AuthController.firebaseUser.uid}.jpeg');
+      try {
+        await defaultImage.writeToFile(file);
+      } catch (e) {
+        print(e.toString());
+      }
+      Picture picture = Picture(picName: file);
+      Provider.of<Picture>(context, listen: false).storeImage(picture);
     }
-    Picture picture = Picture(picName: file);
-    Provider.of<Picture>(context, listen: false).storeImage(picture);
   }
 
   Future<void> uploadImage(String filePath) async {
+    Reference storage = FirebaseStorage.instance
+        .ref("/images/${AuthController.firebaseUser.uid}.jpeg");
+
+    Reference defaultImage = FirebaseStorage.instance.ref('/default.png');
     File file = File(filePath);
     try {
       await storage.putFile(file);

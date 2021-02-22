@@ -2,16 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
   String name;
-  int age;
+  String dob;
   String company;
   String uid;
 
-  UserModel({this.age, this.company, this.name, this.uid});
+  UserModel({this.dob = "", this.company, this.name, this.uid});
 
   factory UserModel.fromJson(DocumentSnapshot documentSnapshot) {
     return UserModel(
         name: documentSnapshot.data()["name"],
-        age: documentSnapshot.data()["age"],
+        dob: documentSnapshot.data()["dob"],
         company: documentSnapshot.data()["company"],
         uid: documentSnapshot.data()["uid"]);
   }
@@ -20,7 +20,7 @@ class UserModel {
     return {
       "name": this.name,
       "company": this.company,
-      "age": this.age,
+      "dob": this.dob.toString(),
       "uid": this.uid
     };
   }

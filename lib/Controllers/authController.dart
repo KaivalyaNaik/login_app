@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:login_app/constants.dart';
 import 'package:login_app/models/user_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -11,6 +12,7 @@ class AuthController {
 
   Future<void> createUser(String email, String password, UserModel userModel,
       BuildContext context) async {
+    print("here");
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
@@ -20,15 +22,12 @@ class AuthController {
       Navigator.pop(context, true);
     } on FirebaseAuthException catch (e) {
       print(e.message);
-      Fluttertoast.showToast(
-        msg: e.message,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.blue,
-        textColor: Colors.white,
-        fontSize: 16,
-      );
     } catch (e) {
+      if (e.code == 'email-already-exists')
+        Fluttertoast.showToast(
+            msg: "User Already Exists!!",
+            backgroundColor: primaryColor,
+            textColor: backgroundColor);
       print("Error :$e");
     }
   }
@@ -41,15 +40,13 @@ class AuthController {
       firebaseUser = userCredential.user;
     } on FirebaseAuthException catch (e) {
       print(e.code);
-      if (e.code == 'wrong-password')
+      if (e.code == 'wrong-password') {
+        //Scaffold.of(context).showSnackBar(snackbar("Wrong Password!!"));
         Fluttertoast.showToast(
-          msg: "Wrong Password!Please try again",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: Colors.blue,
-          textColor: Colors.white,
-          fontSize: 16,
-        );
+            msg: "Wrong Password!!!",
+            backgroundColor: primaryColor,
+            textColor: backgroundColor);
+      }
     } catch (e) {
       print("Error:$e");
     }
@@ -70,4 +67,17 @@ class AuthController {
         .set(userModel.toJson())
         .then((value) => {print("Added Successfully")});
   }
+}
+
+Widget snackbar(String msg) {
+  return SnackBar(
+      content: Container(
+    height: 10,
+    width: 100,
+    color: backgroundColor,
+    child: Text(
+      msg,
+      style: TextStyle(color: Colors.white),
+    ),
+  ));
 }

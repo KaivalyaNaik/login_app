@@ -35,9 +35,11 @@ class _TakePicScreenState extends State<TakePicScreen> {
       _takenImage = File(imageFile.path);
     });
     final appDir = await pPath.getApplicationDocumentsDirectory();
-
-    final savedImage = await _takenImage.copy('${appDir.path}/${user.uid}');
-
+    var savedImage;
+    if (user != null)
+      savedImage = await _takenImage.copy('${appDir.path}/${user.uid}');
+    else
+      savedImage = await _takenImage.copy('${appDir.path}/profile.png');
     var _imageToStore = Picture(picName: savedImage);
 
     Provider.of<Picture>(context, listen: false).storeImage(_imageToStore);
