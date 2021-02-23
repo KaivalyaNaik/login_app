@@ -7,4 +7,8 @@ class UserController {
   Future<UserModel> getUser(String uid) async {
     return userService.getUser(uid);
   }
+
+  Future<void> setUser(String uid, UserModel userModel) async {
+    return userService.setUser(uid, userModel);
+  }
 }

@@ -9,4 +9,8 @@ class UserService {
       return UserModel.fromJson(documentSnapshot);
     });
   }
+
+  Future<void> setUser(String uid, UserModel userModel) {
+    return users.doc("$uid").set(userModel.toJson());
+  }
 }

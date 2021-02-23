@@ -28,6 +28,12 @@ class AuthController {
             msg: "User Already Exists!!",
             backgroundColor: primaryColor,
             textColor: backgroundColor);
+      else {
+        Fluttertoast.showToast(
+            msg: "Operation Not Permitted",
+            textColor: backgroundColor,
+            backgroundColor: primaryColor);
+      }
       print("Error :$e");
     }
   }
@@ -41,13 +47,28 @@ class AuthController {
     } on FirebaseAuthException catch (e) {
       print(e.code);
       if (e.code == 'wrong-password') {
-        //Scaffold.of(context).showSnackBar(snackbar("Wrong Password!!"));
-        Fluttertoast.showToast(
+        Scaffold.of(context).showSnackBar(snackbar("Wrong Password!!"));
+        /* Fluttertoast.showToast(
             msg: "Wrong Password!!!",
             backgroundColor: primaryColor,
-            textColor: backgroundColor);
+            textColor: backgroundColor);*/
+      } else if (e.code == 'user-not-found') {
+        Fluttertoast.showToast(
+            msg: "User Not Found",
+            textColor: backgroundColor,
+            backgroundColor: primaryColor);
+      } else {
+        Fluttertoast.showToast(
+            msg: "Operation Not Permitted",
+            textColor: backgroundColor,
+            backgroundColor: primaryColor);
       }
     } catch (e) {
+      Fluttertoast.showToast(
+          msg: "Operation Not Permitted",
+          textColor: backgroundColor,
+          backgroundColor: primaryColor);
+
       print("Error:$e");
     }
   }

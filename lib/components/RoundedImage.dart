@@ -6,18 +6,19 @@ import 'package:login_app/constants.dart';
 class RoundedImage extends StatelessWidget {
   final String imagePath;
   final double size;
-  RoundedImage({this.imagePath, this.size});
+  final double radius;
+  RoundedImage({this.imagePath, this.size, this.radius = 75});
   @override
   Widget build(BuildContext context) {
     File image = File(imagePath);
     return CircleAvatar(
         backgroundColor: primaryColor,
-        radius: 75,
+        radius: radius,
         child: ClipOval(
           child: Image.file(
             image,
-            width: 130,
-            height: 130,
+            width: size,
+            height: size,
             fit: BoxFit.cover,
           ),
         ));
